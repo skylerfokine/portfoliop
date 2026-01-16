@@ -12,7 +12,7 @@ const aboutMe = {
 export function HeadshotCard() {
   return (
     <>
-      <Card style={{ width: "344px", height: "640px" }}>
+      <Card style={{ width: "344px", height: "640px", position: sticky }}>
         <Card.Body>
           <div
             className="w-100 overflow-hidden rounded-4"
