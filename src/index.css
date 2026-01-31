@@ -1,5 +1,6 @@
 /* src/index.css
-   Bootstrap theme skin using your palette:
+   Theme + layout for Skyler portfolio (Vite + React-Bootstrap)
+   Palette:
    - Dark Amethyst: #2E0A41
    - Graphite:      #2A2D32
    - Dark Spruce:   #254F22
@@ -9,7 +10,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ===== Base + Theme Tokens ===== */
 :root {
   font-family:
     system-ui,
@@ -33,20 +33,22 @@ html {
   --graphite: #2a2d32;
   --spruce: #254f22;
 
-  /* Helpful neutrals for dark UI */
+  /* Neutrals */
   --paper: #f6f4f7;
   --card: #121317;
   --border: rgba(255, 255, 255, 0.08);
   --muted: rgba(246, 244, 247, 0.68);
 }
 
-/* ===== Global Page ===== */
+/* ===== Global page ===== */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
 
-  /* nicer dark background */
+  /* IMPORTANT: remove Vite template centering */
+  display: block;
+
   background:
     radial-gradient(
       1200px 600px at 15% 10%,
@@ -63,27 +65,231 @@ body {
   color: var(--paper);
 }
 
-/* Headings (optional) */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--paper);
-}
-
-/* ===== Links ===== */
+/* Links */
 a {
   color: rgba(246, 244, 247, 0.9);
   text-decoration: none;
 }
 a:hover {
   color: #ffffff;
-  text-decoration: none;
 }
 
-/* ===== Bootstrap Skins ===== */
+/* ===== Bootstrap “dark skin” touches ===== */
+.card {
+  background: rgba(18, 19, 23, 0.86);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.text-muted {
+  color: var(--muted) !important;
+}
+
+.list-group-item {
+  background: transparent !important;
+  color: var(--paper) !important;
+  border-color: rgba(246, 244, 247, 0.12) !important;
+}
+
+.form-control,
+.form-select,
+textarea {
+  background: rgba(18, 19, 23, 0.72) !important;
+  border: 1px solid rgba(246, 244, 247, 0.16) !important;
+  color: var(--paper) !important;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+  color: rgba(246, 244, 247, 0.5) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 0.2rem rgba(46, 10, 65, 0.35) !important;
+  border-color: rgba(46, 10, 65, 0.6) !important;
+}
+
+hr {
+  border-color: rgba(246, 244, 247, 0.12);
+}
+
+/* ===== Right column panel (keeps it from feeling “blocky”) ===== */
+.right-panel {
+  background: rgba(18, 19, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* Section spacing + divider */
+.section-block + .section-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(246, 244, 247, 0.1);
+}
+
+.section-title {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(246, 244, 247, 0.72);
+  margin-bottom: 12px;
+}
+
+.project-row {
+  padding: 12px 0;
+  border-top: 1px solid rgba(246, 244, 247, 0.08);
+}
+.project-row:first-of-type {
+  border-top: none;
+}
+.project-row:hover {
+  background: rgba(46, 10, 65, 0.08);
+  border-radius: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* ===== Tools: 2x3 grid “page” that auto-scrolls forever ===== */
+
+.tools-grid-strip {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+/* edge fades */
+.tools-grid-strip__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tools-grid-strip__fade--left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(18, 19, 23, 1),
+    rgba(18, 19, 23, 0)
+  );
+}
+
+.tools-grid-strip__fade--right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(18, 19, 23, 1),
+    rgba(18, 19, 23, 0)
+  );
+}
+
+/* the moving belt of pages */
+.tools-grid-strip__track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding: 10px 10px;
+  animation: tools-grid-marquee 18s linear infinite;
+  will-change: transform;
+}
+
+/* IMPORTANT: user asked it should NOT pause on hover — so no hover rule here */
+
+@keyframes tools-grid-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* each “page” is a 2x3 grid */
+.tools-grid-page {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+
+  /* sets a consistent page width so the scroll looks smooth */
+  width: 560px;
+  max-width: 85vw;
+}
+
+/* compact tool tile (grid-friendly) */
+.tool-tile--compact {
+  min-width: 0; /* override old min-width behavior */
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+/* base tile style */
+.tool-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: rgba(18, 19, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.tool-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(46, 10, 65, 0.35);
+  background: rgba(18, 19, 23, 0.82);
+}
+
+.tool-tile__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(246, 244, 247, 0.06);
+  border: 1px solid rgba(246, 244, 247, 0.1);
+}
+
+.tool-tile__icon i {
+  font-size: 24px;
+  line-height: 1;
+  color: rgba(246, 244, 247, 0.92);
+}
+
+.tool-tile__name {
+  font-weight: 700;
+  color: rgba(246, 244, 247, 0.95);
+}
+
+.tool-tile__sub {
+  font-size: 0.92rem;
+  color: rgba(246, 244, 247, 0.62);
+}
+
+/* Responsive tightening */
+@media (max-width: 520px) {
+  .tools-grid-page {
+    width: 520px;
+    gap: 12px;
+  }
+  .tools-grid-strip__fade {
+    width: 54px;
+  }
+}
 
 /* Floating top nav */
 .floating-nav {
@@ -134,266 +340,4 @@ a:hover {
   justify-content: center;
   margin-top: 18px; /* space above */
   margin-bottom: 18px; /* space below */
-}
-/* Cards */
-.card {
-  background: rgba(18, 19, 23, 0.85);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(10px);
-}
-
-/* Muted text (Bootstrap uses this class a lot) */
-.text-muted {
-  color: var(--muted) !important;
-}
-
-/* ListGroup on dark */
-.list-group-item {
-  background: transparent !important;
-  color: var(--paper) !important;
-  border-color: rgba(246, 244, 247, 0.12) !important;
-}
-
-/* Inputs */
-.form-control,
-.form-select,
-textarea {
-  background: rgba(18, 19, 23, 0.7) !important;
-  border: 1px solid rgba(246, 244, 247, 0.16) !important;
-  color: var(--paper) !important;
-}
-
-.form-control::placeholder,
-textarea::placeholder {
-  color: rgba(246, 244, 247, 0.5) !important;
-}
-
-.form-control:focus,
-.form-select:focus,
-textarea:focus {
-  box-shadow: 0 0 0 0.2rem rgba(46, 10, 65, 0.35) !important;
-  border-color: rgba(46, 10, 65, 0.6) !important;
-}
-
-/* Optional: nicer HR if you use it */
-hr {
-  border-color: rgba(246, 244, 247, 0.12);
-}
-
-/* ===== Reusable Brand Utility Classes ===== */
-
-/* Buttons */
-.btn-amethyst {
-  background: var(--amethyst);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--paper);
-}
-.btn-amethyst:hover {
-  filter: brightness(1.08);
-  color: #fff;
-}
-
-.btn-spruce {
-  background: var(--spruce);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--paper);
-}
-.btn-spruce:hover {
-  filter: brightness(1.08);
-  color: #fff;
-}
-
-.btn-outline-paper {
-  border: 1px solid rgba(246, 244, 247, 0.35);
-  color: rgba(246, 244, 247, 0.9);
-  background: transparent;
-}
-.btn-outline-paper:hover {
-  background: rgba(246, 244, 247, 0.08);
-  border-color: rgba(246, 244, 247, 0.55);
-  color: #fff;
-}
-
-/* Badges */
-.badge-amethyst {
-  background: rgba(46, 10, 65, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--paper);
-}
-
-.badge-spruce {
-  background: rgba(37, 79, 34, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--paper);
-}
-
-/* Right column: one cohesive panel instead of stacked blocks */
-.right-panel {
-  background: rgba(18, 19, 23, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 22px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
-}
-
-/* Section spacing + divider lines */
-.section-block + .section-block {
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(246, 244, 247, 0.1);
-}
-
-/* Small label style (less “card title”, more modern) */
-.section-title {
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(246, 244, 247, 0.72);
-  margin-bottom: 12px;
-}
-
-/* Optional: soften list bullets */
-.section-block ul {
-  margin-bottom: 0;
-}
-
-.project-row {
-  padding: 12px 0;
-  border-top: 1px solid rgba(246, 244, 247, 0.08);
-}
-.project-row:first-of-type {
-  border-top: none;
-}
-.project-row:hover {
-  background: rgba(46, 10, 65, 0.08);
-  border-radius: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-/* ===== Premium tools carousel ===== */
-
-.tools-strip {
-  position: relative;
-  overflow: hidden;
-  padding: 6px 0;
-}
-
-/* subtle edge fades like the screenshot */
-.tools-strip__fade {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.tools-strip__fade--left {
-  left: 0;
-  background: linear-gradient(
-    to right,
-    rgba(42, 45, 50, 1),
-    rgba(42, 45, 50, 0)
-  );
-}
-
-.tools-strip__fade--right {
-  right: 0;
-  background: linear-gradient(
-    to left,
-    rgba(42, 45, 50, 1),
-    rgba(42, 45, 50, 0)
-  );
-}
-
-/* scrolling track */
-.tools-strip__track {
-  display: flex;
-  gap: 16px;
-  width: max-content;
-  animation: tools-marquee 22s linear infinite;
-  padding: 8px 10px;
-}
-
-/* pause on hover (feels premium + user control) */
-.tools-strip:hover .tools-strip__track {
-  animation-play-state: paused;
-}
-
-@keyframes tools-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* tile styles */
-.tool-tile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  min-width: 260px;
-  padding: 14px 16px;
-  border-radius: 16px;
-
-  background: rgba(18, 19, 23, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-
-  transition:
-    transform 140ms ease,
-    border-color 140ms ease,
-    background 140ms ease;
-}
-
-.tool-tile:hover {
-  transform: translateY(-1px);
-  border-color: rgba(46, 10, 65, 0.35);
-  background: rgba(18, 19, 23, 0.82);
-}
-
-/* icon container */
-.tool-tile__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-
-  display: grid;
-  place-items: center;
-
-  background: rgba(246, 244, 247, 0.06);
-  border: 1px solid rgba(246, 244, 247, 0.1);
-}
-
-/* devicon glyph size */
-.tool-tile__icon i {
-  font-size: 26px;
-  line-height: 1;
-  color: rgba(246, 244, 247, 0.92);
-}
-
-/* text */
-.tool-tile__name {
-  font-weight: 700;
-  color: rgba(246, 244, 247, 0.95);
-}
-
-.tool-tile__sub {
-  font-size: 0.92rem;
-  color: rgba(246, 244, 247, 0.62);
-}
-
-/* responsive: smaller tiles on tiny screens */
-@media (max-width: 520px) {
-  .tool-tile {
-    min-width: 220px;
-  }
-  .tools-strip__fade {
-    width: 44px;
-  }
 }

@@ -25,6 +25,7 @@ export function ToolsCarouselGrid() {
       subtitle: "CRM Platform",
       icon: "devicon-salesforce-plain",
     },
+
     {
       name: "JavaScript",
       subtitle: "Language",

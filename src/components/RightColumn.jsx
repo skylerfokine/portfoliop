@@ -1,13 +1,21 @@
 // src/components/RightColumn.jsx
 import Badge from "react-bootstrap/Badge";
 import Stack from "react-bootstrap/Stack";
-import { ToolsCarousel } from "./ToolsCarousel";
+import { ToolsCarouselGrid } from "./ToolsCarousel";
 
 const experience = [
   {
     role: "Software Development Co-op",
     org: "Midmark Corp. — Versailles, OH",
     dates: "May 2025 – Aug 2025",
+    tags: [
+      "Salesforce",
+      "Azure Devops",
+      "C#",
+      "RobotFramework",
+      "Apex",
+      "SOQL",
+    ],
     bullets: [
       "Migrated legacy Salesforce Process Builder automations to Salesforce Flow in a production org, standardizing logic and improving maintainability while reducing change-risk during future releases.",
       "Cleaned and standardized 1,530+ production Contact records by developing repeatable cleanup procedures and documentation for the team, improving data quality and reducing downstream reporting/integration issues.",
@@ -17,6 +25,7 @@ const experience = [
     role: "Systems Engineering Intern",
     org: "Midmark Corp. — Versailles, OH",
     dates: "May 2024 – Aug 2024",
+    tags: ["Python", "Testing", "Automation"],
     bullets: [
       "Built a Python automation tool to generate software update packages for engineering workflows, cutting manual processing time by ~99% and reducing human error.",
       "Executed system-level validation testing across release builds and escalated defects to engineering teams with clear reproduction steps, improving overall release quality and reducing late-stage surprises.",
@@ -70,13 +79,20 @@ export function RightColumn() {
                   </li>
                 ))}
               </ul>
+              <div className="mt-2 d-flex gap-2 flex-wrap">
+                {e.tags?.map((tag) => (
+                  <Badge key={tag} className="badge-spruce">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </SectionBlock>
 
       <SectionBlock id="tools" title="Tools">
-        <ToolsCarousel />
+        <ToolsCarouselGrid />
       </SectionBlock>
 
       <SectionBlock id="projects" title="Recent Projects">
