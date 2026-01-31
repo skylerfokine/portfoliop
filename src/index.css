@@ -1,69 +1,343 @@
+/* src/index.css
+   Theme + layout for Skyler portfolio (Vite + React-Bootstrap)
+   Palette:
+   - Dark Amethyst: #2E0A41
+   - Graphite:      #2A2D32
+   - Dark Spruce:   #254F22
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Brand palette */
+  --amethyst: #2e0a41;
+  --graphite: #2a2d32;
+  --spruce: #254f22;
+
+  /* Neutrals */
+  --paper: #f6f4f7;
+  --card: #121317;
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: rgba(246, 244, 247, 0.68);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* ===== Global page ===== */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #2a2d32;
+
+  /* IMPORTANT: remove Vite template centering */
+  display: block;
+
+  background:
+    radial-gradient(
+      1200px 600px at 15% 10%,
+      rgba(46, 10, 65, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 85% 0%,
+      rgba(37, 79, 34, 0.28),
+      transparent 55%
+    ),
+    var(--graphite);
+
+  color: var(--paper);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Links */
+a {
+  color: rgba(246, 244, 247, 0.9);
+  text-decoration: none;
+}
+a:hover {
+  color: #ffffff;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* ===== Bootstrap “dark skin” touches ===== */
+.card {
+  background: rgba(18, 19, 23, 0.86);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.text-muted {
+  color: var(--muted) !important;
+}
+
+.list-group-item {
+  background: transparent !important;
+  color: var(--paper) !important;
+  border-color: rgba(246, 244, 247, 0.12) !important;
+}
+
+.form-control,
+.form-select,
+textarea {
+  background: rgba(18, 19, 23, 0.72) !important;
+  border: 1px solid rgba(246, 244, 247, 0.16) !important;
+  color: var(--paper) !important;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+  color: rgba(246, 244, 247, 0.5) !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 0.2rem rgba(46, 10, 65, 0.35) !important;
+  border-color: rgba(46, 10, 65, 0.6) !important;
+}
+
+hr {
+  border-color: rgba(246, 244, 247, 0.12);
+}
+
+/* ===== Right column panel (keeps it from feeling “blocky”) ===== */
+.right-panel {
+  background: rgba(18, 19, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* Section spacing + divider */
+.section-block + .section-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(246, 244, 247, 0.1);
+}
+
+.section-title {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(246, 244, 247, 0.72);
+  margin-bottom: 12px;
+}
+
+.project-row {
+  padding: 12px 0;
+  border-top: 1px solid rgba(246, 244, 247, 0.08);
+}
+.project-row:first-of-type {
+  border-top: none;
+}
+.project-row:hover {
+  background: rgba(46, 10, 65, 0.08);
+  border-radius: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* ===== Tools: 2x3 grid “page” that auto-scrolls forever ===== */
+
+.tools-grid-strip {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+/* edge fades */
+.tools-grid-strip__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tools-grid-strip__fade--left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(18, 19, 23, 1),
+    rgba(18, 19, 23, 0)
+  );
+}
+
+.tools-grid-strip__fade--right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(18, 19, 23, 1),
+    rgba(18, 19, 23, 0)
+  );
+}
+
+/* the moving belt of pages */
+.tools-grid-strip__track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding: 10px 10px;
+  animation: tools-grid-marquee 18s linear infinite;
+  will-change: transform;
+}
+
+/* IMPORTANT: user asked it should NOT pause on hover — so no hover rule here */
+
+@keyframes tools-grid-marquee {
+  from {
+    transform: translateX(0);
   }
-  a:hover {
-    color: #747bff;
+  to {
+    transform: translateX(-50%);
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+/* each “page” is a 2x3 grid */
+.tools-grid-page {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+
+  /* sets a consistent page width so the scroll looks smooth */
+  width: 560px;
+  max-width: 85vw;
+}
+
+/* compact tool tile (grid-friendly) */
+.tool-tile--compact {
+  min-width: 0; /* override old min-width behavior */
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+/* base tile style */
+.tool-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: rgba(18, 19, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.tool-tile:hover {
+  transform: translateY(-1px);
+  border-color: rgba(46, 10, 65, 0.35);
+  background: rgba(18, 19, 23, 0.82);
+}
+
+.tool-tile__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(246, 244, 247, 0.06);
+  border: 1px solid rgba(246, 244, 247, 0.1);
+}
+
+.tool-tile__icon i {
+  font-size: 24px;
+  line-height: 1;
+  color: rgba(246, 244, 247, 0.92);
+}
+
+.tool-tile__name {
+  font-weight: 700;
+  color: rgba(246, 244, 247, 0.95);
+}
+
+.tool-tile__sub {
+  font-size: 0.92rem;
+  color: rgba(246, 244, 247, 0.62);
+}
+
+/* Responsive tightening */
+@media (max-width: 520px) {
+  .tools-grid-page {
+    width: 520px;
+    gap: 12px;
   }
+  .tools-grid-strip__fade {
+    width: 54px;
+  }
+}
+
+/* Floating top nav */
+.floating-nav {
+  top: 18px; /* margin above it */
+  z-index: 1050; /* above content */
+  width: auto;
+}
+
+/* Pill container */
+.floating-nav__inner {
+  background: rgba(18, 19, 23, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 10px 14px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Icon buttons */
+.floating-nav__btn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: rgba(246, 244, 247, 0.8);
+  text-decoration: none;
+  transition:
+    transform 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.floating-nav__btn:hover {
+  color: rgba(246, 244, 247, 1);
+  background: rgba(246, 244, 247, 0.08);
+  transform: translateY(-1px);
+}
+
+.floating-nav__btn.is-active {
+  color: rgba(246, 244, 247, 1);
+  background: rgba(46, 10, 65, 0.35); /* your Amethyst tint */
+  border: 1px solid rgba(46, 10, 65, 0.55);
+}
+
+.nav-slot {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px; /* space above */
+  margin-bottom: 18px; /* space below */
 }
