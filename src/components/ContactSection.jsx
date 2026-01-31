@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 
 export function ContactSection() {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm border-0">
       <Card.Body>
         <Card.Title className="mb-3">Contact</Card.Title>
 
@@ -30,7 +30,7 @@ export function ContactSection() {
           </Form.Group>
 
           <div className="d-flex justify-content-end">
-            <Button type="submit" variant="dark">
+            <Button type="submit" className="atn-amthyst">
               Send
             </Button>
           </div>

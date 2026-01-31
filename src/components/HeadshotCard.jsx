@@ -23,7 +23,7 @@ const aboutMe = {
 
 export function HeadshotCard() {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm  border-0">
       <Card.Body>
         {/* Cropped + rounded hero image */}
         <div
@@ -52,9 +52,9 @@ export function HeadshotCard() {
           {aboutMe.links.map((l) => (
             <Button
               key={l.label}
-              variant="outline-dark"
+              variant="outline-light"
               size="sm"
-              className="d-inline-flex align-items-center gap-2"
+              className="btn-outline-paper d-inline-flex align-items-center gap-2"
               href={l.href}
               target={l.href.startsWith("http") ? "_blank" : undefined}
               rel={l.href.startsWith("http") ? "noreferrer" : undefined}

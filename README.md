@@ -24,5 +24,3 @@ If you are developing a production application, we recommend using TypeScript wi
       Graphite: 2A2D32
       Dark Spruce: 254F22
 
-
-      https://sawad.framer.website/ lowkey copying this
