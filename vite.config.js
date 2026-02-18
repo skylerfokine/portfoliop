@@ -10,5 +10,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/skyler-portfolio",
+  base: "/skyler-portfolio/",
 });
